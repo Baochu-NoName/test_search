@@ -17,4 +17,5 @@ Things you may want to cover:
 
 * Database initialization
 
-* How to run the test suite
+* This app was using gem: devise(authencation), raty.js(rating system), ransack(search engine)...
+* Notice: This is only using for learning purposes
