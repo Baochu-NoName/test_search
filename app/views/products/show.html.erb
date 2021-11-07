@@ -1,0 +1,53 @@
+<p id="notice"><%= notice %></p>
+<p>
+  <strong>Image:</strong>
+  <%= image_tag @product.image, size:'100x100' %>
+</p>
+<div class="star-rating" data-score= <%= @avg_review %> ></div>
+<em><%= "#{@reviews.length} reviews" %></em>
+<p>
+  <strong>Name:</strong>
+  <%= @product.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @product.description %>
+</p>
+<p>
+  <strong>Price:</strong>
+  <%= number_to_currency @product.price %>
+</p>
+<p>
+  <strong>Category:</strong>
+  <%= @product.category_id %>
+</p>
+<% if user_signed_in?%>
+<%= link_to "Write a review", new_product_review_path(@product) %>
+<%else%>
+<p>You must Sign in before continue <%= link_to "Sign In", new_user_session_path %> or
+<%= link_to "Sign Up", new_user_registration_path %></p>
+<%end%>
+<% if @reviews.blank? %>
+  <div class="col-7-md col-md-offset-1">
+    <h3>No product reviews</h3>
+    <%= link_to "Write review", new_product_review_path(@product), class:"btn btn-success" %>
+    <%else%>
+    <% @reviews.each do |review| %>
+    <div class="star-rating" data-score= <%= review.rating %> ></div>
+    <p><%= review.comment %></p>
+  </div>  
+<%end%>
+<%end%>
+<%= link_to 'Edit', edit_product_path(@product) %> |
+<%= link_to 'Back', products_path %>
+<script>
+  $('.star-rating').raty({
+  path: '/assets/',
+  readOnly: true,
+  half:  true,
+  score: function(){
+    return $(this).attr('data-score');
+  }
+});
+</script>

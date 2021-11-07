@@ -1,0 +1,53 @@
+<%= search_form_for @q do |f| %>
+
+  <div class="field">
+  <%= f.label :seach_products_cont %>
+  <%= f.search_field :name_or_category_title_or_description_cont %>
+  </div>
+  <br/>
+  <div class="field">
+    <%= f.label :price_gteq, "From" %>
+    <%= f.search_field :price_gteq%>
+    <%= f.label :price_lteq, "To" %>
+    <%= f.search_field :price_lteq%>
+  </div>
+  <%= f.submit :Submit, style: "display: none" %>
+<%end%>
+   
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Image</th>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Description</th>
+      <th>Category</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+  <tbody>
+   	<% if @products.present? %>
+     <tr>
+     	<% @products.each do |product| %>
+        <td><%= image_tag product.image, size:'100x100'%></td>
+        <td><%= product.name %></td>
+        <td><%= number_to_currency product.price %></td>
+        <td><%= product.description %></td>
+        <td><%= product.category.title %></td>
+        <td><%= link_to 'Show', product %></td>
+        <td><%= link_to 'Edit', edit_product_path(product) %></td>
+        <td><%= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+      <% end %>
+	<%else%>
+	<br/><hr>
+	<div class="col-12">
+       <p>
+       	<%= image_tag('download.png', size:"200x200",  class: "mx-auto d-block") %>
+       <h2 style="text-align: center;">No results founds</h2></p> </div>
+	<%end%>  
+  </tbody>
+</table>
+
+<br>
